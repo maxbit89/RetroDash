@@ -109,10 +109,11 @@ class Bluetoothctl:
             enable = "off"
         
         try:
-            out = self.get_output("power %s" % (enable))
+            out = self.get_output("power %s" % (enable), 1)
         except BluetoothctlError as e:
             print(e)
             return None
+        return out
 
     def agent(self, enable):
         try:
@@ -170,4 +171,6 @@ if __name__ == "__main__":
 
     print("Init bluetooth...")
     bl = Bluetoothctl()
-    bl.power(True)
+    print(bl.power(True))
+    for dev in bl.get_paired_devices():
+        print(dev)
