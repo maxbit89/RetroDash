@@ -116,6 +116,7 @@ class Bluetoothctl:
 
     def agent(self, enable):
         try:
+            print("TODO")
         except BluetoothctlError as e:
             print(e)
             return None
