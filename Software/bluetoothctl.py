@@ -4,7 +4,6 @@ import subprocess
 import sys
 
 class BluetoothctlError(Exception):
-    """bluetoothctl Couldn't be started."""
     pass
 
 
@@ -14,7 +13,6 @@ class Bluetoothctl:
         self.child = pexpect.spawn("bluetoothctl", echo = False)
 
     def get_output(self, command, pause = 0):
-        """Run a command in bluetoothctl prompt, return output as a list of lines."""
         self.child.send(command + "\n")
         time.sleep(pause)
         start_failed = self.child.expect(["bluetooth", pexpect.EOF])
@@ -25,7 +23,6 @@ class Bluetoothctl:
         return self.child.before.split("\r\n")
 
     def start_scan(self):
-        """Start bluetooth scanning process."""
         try:
             out = self.get_output("scan on")
         except BluetoothctlError, e:
@@ -33,7 +30,6 @@ class Bluetoothctl:
             return None
 
     def make_discoverable(self):
-        """Make device discoverable."""
         try:
             out = self.get_output("discoverable on")
         except BluetoothctlError, e:
@@ -62,7 +58,6 @@ class Bluetoothctl:
         return device
 
     def get_available_devices(self):
-        """Return a list of tuples of paired and discoverable devices."""
         try:
             out = self.get_output("devices")
         except BluetoothctlError, e:
@@ -78,7 +73,6 @@ class Bluetoothctl:
             return available_devices
 
     def get_paired_devices(self):
-        """Return a list of tuples of paired devices."""
         try:
             out = self.get_output("paired-devices")
         except BluetoothctlError, e:
@@ -94,14 +88,12 @@ class Bluetoothctl:
             return paired_devices
 
     def get_discoverable_devices(self):
-        """Filter paired devices out of available."""
         available = self.get_available_devices()
         paired = self.get_paired_devices()
 
         return [d for d in available if d not in paired]
 
     def get_device_info(self, mac_address):
-        """Get device info by mac address."""
         try:
             out = self.get_output("info " + mac_address)
         except BluetoothctlError, e:
@@ -109,13 +101,25 @@ class Bluetoothctl:
             return None
         else:
             return out
+
+    def power(self, enable):
+        if enable:
+            enable = "on"
+        else:
+            enable = "off"
+        
+        try:
+            out = self.get_output("power %s" % (enable))
+        except BluetoothctlError, e:
+            print(e)
+            return None
+
     def agent(self, enable):
         try:
         except BluetoothctlError, e:
             
 
     def pair(self, mac_address):
-        """Try to pair with a device by mac address."""
         try:
             out = self.get_output("pair " + mac_address, 4)
         except BluetoothctlError, e:
@@ -127,7 +131,6 @@ class Bluetoothctl:
             return success
 
     def remove(self, mac_address):
-        """Remove paired device by mac address, return success of the operation."""
         try:
             out = self.get_output("remove " + mac_address, 3)
         except BluetoothctlError, e:
@@ -139,7 +142,6 @@ class Bluetoothctl:
             return success
 
     def connect(self, mac_address):
-        """Try to connect to a device by mac address."""
         try:
             out = self.get_output("connect " + mac_address, 2)
         except BluetoothctlError, e:
@@ -151,7 +153,6 @@ class Bluetoothctl:
             return success
 
     def disconnect(self, mac_address):
-        """Try to disconnect to a device by mac address."""
         try:
             out = self.get_output("disconnect " + mac_address, 2)
         except BluetoothctlError, e:
@@ -167,17 +168,4 @@ if __name__ == "__main__":
 
     print("Init bluetooth...")
     bl = Bluetoothctl()
-    print("Ready!")
-    bl.start_scan()
-    print("Scanning for 10 seconds...")
-    for i in range(0, 10):
-        print(i)
-        time.sleep(1)
-
-    print(bl.get_discoverable_devices())
-
-
-
-
-
-
+    bl.power(True)
