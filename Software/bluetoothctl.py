@@ -25,14 +25,14 @@ class Bluetoothctl:
     def start_scan(self):
         try:
             out = self.get_output("scan on")
-        except BluetoothctlError, e:
+        except BluetoothctlError as e:
             print(e)
             return None
 
     def make_discoverable(self):
         try:
             out = self.get_output("discoverable on")
-        except BluetoothctlError, e:
+        except BluetoothctlError as e:
             print(e)
             return None
 
@@ -60,7 +60,7 @@ class Bluetoothctl:
     def get_available_devices(self):
         try:
             out = self.get_output("devices")
-        except BluetoothctlError, e:
+        except BluetoothctlError as e:
             print(e)
             return None
         else:
@@ -75,7 +75,7 @@ class Bluetoothctl:
     def get_paired_devices(self):
         try:
             out = self.get_output("paired-devices")
-        except BluetoothctlError, e:
+        except BluetoothctlError as e:
             print(e)
             return None
         else:
@@ -96,7 +96,7 @@ class Bluetoothctl:
     def get_device_info(self, mac_address):
         try:
             out = self.get_output("info " + mac_address)
-        except BluetoothctlError, e:
+        except BluetoothctlError as e:
             print(e)
             return None
         else:
@@ -110,19 +110,19 @@ class Bluetoothctl:
         
         try:
             out = self.get_output("power %s" % (enable))
-        except BluetoothctlError, e:
+        except BluetoothctlError as e:
             print(e)
             return None
 
     def agent(self, enable):
         try:
-        except BluetoothctlError, e:
+        except BluetoothctlError as e:
             
 
     def pair(self, mac_address):
         try:
             out = self.get_output("pair " + mac_address, 4)
-        except BluetoothctlError, e:
+        except BluetoothctlError as e:
             print(e)
             return None
         else:
@@ -133,7 +133,7 @@ class Bluetoothctl:
     def remove(self, mac_address):
         try:
             out = self.get_output("remove " + mac_address, 3)
-        except BluetoothctlError, e:
+        except BluetoothctlError as e:
             print(e)
             return None
         else:
@@ -144,7 +144,7 @@ class Bluetoothctl:
     def connect(self, mac_address):
         try:
             out = self.get_output("connect " + mac_address, 2)
-        except BluetoothctlError, e:
+        except BluetoothctlError as e:
             print(e)
             return None
         else:
@@ -155,7 +155,7 @@ class Bluetoothctl:
     def disconnect(self, mac_address):
         try:
             out = self.get_output("disconnect " + mac_address, 2)
-        except BluetoothctlError, e:
+        except BluetoothctlError as e:
             print(e)
             return None
         else:
