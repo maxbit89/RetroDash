@@ -113,7 +113,9 @@ class Bluetoothctl:
         except BluetoothctlError as e:
             print(e)
             return None
-        return out
+        res = self.child.expect(["Failed to power", "power on succeeded", pexpect.EOF])
+        success = True if res == 1 else False
+        return success
 
     def agent(self, enable):
         try:
