@@ -117,7 +117,8 @@ class Bluetoothctl:
     def agent(self, enable):
         try:
         except BluetoothctlError as e:
-            
+            print(e)
+            return None
 
     def pair(self, mac_address):
         try:
