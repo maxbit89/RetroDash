@@ -170,7 +170,6 @@ class Bluetoothctl:
 
 
 if __name__ == "__main__":
-
     print("Init bluetooth...")
     bl = Bluetoothctl()
     print(bl.power(True))
