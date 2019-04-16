@@ -270,7 +270,7 @@ Wire Wire Line
 	4650 1750 4650 1000
 Wire Wire Line
 	4650 1000 7900 1000
-Text Label 7600 900  0    50   ~ 0
+Text Label 7500 900  0    50   ~ 0
 LED0
 Text Label 7850 950  0    50   ~ 0
 LED1
